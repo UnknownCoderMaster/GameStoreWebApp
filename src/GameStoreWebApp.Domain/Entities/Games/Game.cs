@@ -1,4 +1,5 @@
 ﻿using GameStoreWebApp.Domain.Commons;
+using GameStoreWebApp.Domain.Entities.Feedbacks;
 using GameStoreWebApp.Domain.Enums;
 
 namespace GameStoreWebApp.Domain.Entities.Games;
@@ -12,4 +13,5 @@ public class Game : BaseEntity
     public DateOnly ReleaseDate { get; set; }
     public string Developer { get; set; }
     public int Downloads { get; set; }
+    public List<Rate> Rates { get; set; }
 }
