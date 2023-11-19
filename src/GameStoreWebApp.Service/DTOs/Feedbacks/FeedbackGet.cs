@@ -2,4 +2,4 @@
 
 namespace GameStoreWebApp.Service.DTOs.Feedbacks;
 
-public record FeedbackGet(UserGet User, string Message);
+public record FeedbackGet(UserGetDto User, string Message);
