@@ -21,6 +21,25 @@ public class GameStoreDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
+        modelBuilder.Entity<User>()
+            .HasIndex(u => u.Email)
+            .IsUnique();
+
+        modelBuilder.Entity<User>()
+            .HasMany(u => u.Rates)
+            .WithOne(r => r.User)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<User>()
+            .HasMany(u => u.Feedbacks)
+            .WithOne(f => f.User)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Game>()
+            .HasMany<Rate>(g => g.Rates)
+            .WithOne(r => r.Game)
+            .OnDelete(DeleteBehavior.SetNull);
+
 		base.OnModelCreating(modelBuilder);
 	}
 }

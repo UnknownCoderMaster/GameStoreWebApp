@@ -24,7 +24,7 @@ public class User : BaseEntity
     public int RegionId { get; set; }
     public Region Region { get; set; }
     public UserRole Role { get; set; }
-    public string ImagePath { get; set; }
+    public string? ImagePath { get; set; }
     public List<Rate> Rates { get; set; }
     public List<Feedback> Feedbacks { get; set; }
 }
