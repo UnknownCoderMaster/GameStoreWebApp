@@ -1,4 +1,5 @@
 ﻿using GameStoreWebApp.Service.DTOs.Users;
+using System.Threading.Tasks;
 
 namespace GameStoreWebApp.Service.Interfaces.Users;
 

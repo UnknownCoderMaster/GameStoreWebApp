@@ -1,7 +1,10 @@
 ﻿using GameStoreWebApp.Domain.Configurations;
 using GameStoreWebApp.Domain.Entities.Users;
 using GameStoreWebApp.Service.DTOs.Users;
+using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace GameStoreWebApp.Service.Interfaces.Users;
 

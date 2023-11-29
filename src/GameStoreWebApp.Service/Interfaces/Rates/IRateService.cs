@@ -3,7 +3,10 @@ using GameStoreWebApp.Domain.Entities.Feedbacks;
 using GameStoreWebApp.Domain.Entities.Users;
 using GameStoreWebApp.Service.DTOs.Rates;
 using GameStoreWebApp.Service.DTOs.Users;
+using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace GameStoreWebApp.Service.Interfaces.Rates;
 

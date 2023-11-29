@@ -1,4 +1,5 @@
 ﻿using GameStoreWebApp.Domain.Commons;
+using System.Collections.Generic;
 
 namespace GameStoreWebApp.Domain.Entities.Addresses;
 

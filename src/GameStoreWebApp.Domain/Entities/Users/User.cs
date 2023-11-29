@@ -2,6 +2,7 @@
 using GameStoreWebApp.Domain.Entities.Addresses;
 using GameStoreWebApp.Domain.Entities.Feedbacks;
 using GameStoreWebApp.Domain.Enums;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace GameStoreWebApp.Domain.Entities.Users;
@@ -12,7 +13,7 @@ public class User : BaseEntity
     public string FirstName { get; set; }
 	[MaxLength(60)]
 	public string LastName { get; set; }
-    [MaxLength(60)]
+    [MaxLength(80)]
     [EmailAddress]
     public string Email { get; set; }
 	[MaxLength(16), Phone]

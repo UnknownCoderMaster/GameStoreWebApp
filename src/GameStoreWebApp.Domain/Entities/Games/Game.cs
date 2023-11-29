@@ -1,6 +1,8 @@
 ﻿using GameStoreWebApp.Domain.Commons;
 using GameStoreWebApp.Domain.Entities.Feedbacks;
 using GameStoreWebApp.Domain.Enums;
+using System;
+using System.Collections.Generic;
 
 namespace GameStoreWebApp.Domain.Entities.Games;
 

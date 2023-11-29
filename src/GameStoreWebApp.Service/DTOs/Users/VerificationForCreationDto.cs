@@ -1,4 +1,6 @@
-﻿namespace GameStoreWebApp.Service.DTOs.Users;
+﻿using System;
+
+namespace GameStoreWebApp.Service.DTOs.Users;
 
 public class VerificationForCreationDto
 {

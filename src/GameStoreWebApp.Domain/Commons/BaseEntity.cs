@@ -1,4 +1,6 @@
-﻿namespace GameStoreWebApp.Domain.Commons;
+﻿using System;
+
+namespace GameStoreWebApp.Domain.Commons;
 
 public class BaseEntity
 {
