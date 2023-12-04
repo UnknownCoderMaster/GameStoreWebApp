@@ -17,10 +17,10 @@ namespace GameStoreWebApp.Service.Services.Users;
 public class UserService : IUserService
 {
     private readonly IGenericRepository<User> userRepository;
-	private readonly IAuthService authService;
+	private readonly AuthService authService;
 	private readonly IMapper mapper;
 
-	public UserService(IGenericRepository<User> userRepository, IAuthService authService,
+	public UserService(IGenericRepository<User> userRepository, AuthService authService,
         IMapper mapper)
     {
 		this.userRepository = userRepository;
@@ -33,10 +33,21 @@ public class UserService : IUserService
         throw new NotImplementedException();
     }
 
-    public ValueTask<bool> CreateAsync(UserCreateDto userForCreationDTO)
+    public async ValueTask<bool> CreateAsync(UserCreateDto userForCreationDTO)
     {
-        throw new NotImplementedException();
-    }
+		var existEmail = await userRepository.GetAsync(u => u.Email == userForCreationDTO.Email);
+
+		if (existEmail != null)
+			throw new GameAppException(400, "This email is already taken");
+
+		var createdUser = await userRepository.CreateAsync(mapper.Map<User>(userForCreationDTO));
+
+		createdUser.Password = createdUser.Password.Encrypt();
+
+		await userRepository.SaveChangesAsync();
+
+		return await authService.SendEmailVerification(createdUser.Id);
+	}
 
     public async ValueTask<bool> DeleteAsync(int id)
     {
