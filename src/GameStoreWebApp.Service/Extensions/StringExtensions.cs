@@ -2,7 +2,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace MyCareer.Service.Extensions;
+namespace GameStoreWebApp.Service.Extensions;
 
 public static class StringExtensions
 {

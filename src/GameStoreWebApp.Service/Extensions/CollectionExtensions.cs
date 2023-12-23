@@ -1,7 +1,7 @@
 ﻿using GameStoreWebApp.Domain.Configurations;
 using System.Linq;
 
-namespace MyCareer.Service.Extensions;
+namespace GameStoreWebApp.Service.Extensions;
 
 public static class CollectionExtensions
 {

@@ -1,5 +1,9 @@
+using GameStoreWebApp.API.Extensions;
+using GameStoreWebApp.API.Helpers;
 using GameStoreWebApp.Data.Contexts;
+using GameStoreWebApp.Service.Mappers;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,6 +16,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers().AddNewtonsoftJson(options =>
 	options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
 
+builder.Services.AddControllers(options =>
+{
+	options.Conventions.Add(new RouteTokenTransformerConvention(
+								 new ConfigureApiUrlName()));
+});
+
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -23,6 +34,13 @@ builder.Services.AddDbContext<GameStoreDbContext>(option =>
 	option.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddAuthorization();
+
+// Add custom services
+builder.Services.AddAutoMapper(typeof(MapperProfile));
+builder.Services.ConfigureJwt(builder.Configuration);
+builder.Services.AddSwaggerService();
+builder.Services.AddCustomServices();
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 

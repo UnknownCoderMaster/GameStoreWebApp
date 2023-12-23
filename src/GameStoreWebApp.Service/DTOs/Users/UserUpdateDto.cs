@@ -1,5 +1,5 @@
-﻿namespace GameStoreWebApp.Service.DTOs.Users;
+﻿using System.ComponentModel.DataAnnotations;
 
-public class UserUpdateDto
-{
-}
+namespace GameStoreWebApp.Service.DTOs.Users;
+
+public record UserUpdateDto([Required] string Email);

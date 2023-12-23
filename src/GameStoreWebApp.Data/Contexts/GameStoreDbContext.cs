@@ -13,6 +13,7 @@ public class GameStoreDbContext : DbContext
     }
 
 	public DbSet<User> Users { get; set; }
+    public DbSet<Verification> Verifications { get; set; }
     public DbSet<Game> Games { get; set; }
     public DbSet<Country> Countries { get; set; }
     public DbSet<Region> Regions { get; set; }

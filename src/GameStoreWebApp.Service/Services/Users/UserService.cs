@@ -4,9 +4,10 @@ using GameStoreWebApp.Domain.Configurations;
 using GameStoreWebApp.Domain.Entities.Users;
 using GameStoreWebApp.Service.DTOs.Users;
 using GameStoreWebApp.Service.Exceptions;
+using GameStoreWebApp.Service.Helpers;
 using GameStoreWebApp.Service.Interfaces.Users;
 using Microsoft.EntityFrameworkCore;
-using MyCareer.Service.Extensions;
+using GameStoreWebApp.Service.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -17,7 +18,7 @@ namespace GameStoreWebApp.Service.Services.Users;
 public class UserService : IUserService
 {
     private readonly IGenericRepository<User> userRepository;
-	private readonly AuthService authService;
+	private readonly IAuthService authService;
 	private readonly IMapper mapper;
 
 	public UserService(IGenericRepository<User> userRepository, AuthService authService,
@@ -28,10 +29,23 @@ public class UserService : IUserService
 		this.mapper = mapper;
 	}
 
-	public ValueTask<bool> ChangePasswordAsync(UserForChangePasswordDto userForChangePasswordDTO)
+	public async ValueTask<bool> ChangePasswordAsync(UserForChangePasswordDto userForChangePasswordDTO)
     {
-        throw new NotImplementedException();
-    }
+		var user = await userRepository.GetAsync(u => u.Id == HttpContextHelper.UserId);
+
+		if (user == null)
+			throw new GameAppException(404, "User not found");
+
+		if (user.Password != userForChangePasswordDTO.OldPassword.Encrypt())
+			throw new GameAppException(400, "Password is incorrect");
+
+
+		user.Password = userForChangePasswordDTO.NewPassword.Encrypt();
+
+		userRepository.Update(user);
+		await userRepository.SaveChangesAsync();
+		return true;
+	}
 
     public async ValueTask<bool> CreateAsync(UserCreateDto userForCreationDTO)
     {
@@ -77,8 +91,25 @@ public class UserService : IUserService
         return mapper.Map<UserGetDto>(user);
     }
 
-    public ValueTask<UserGetDto> UpdateAsync(int id, UserUpdateDto userUpdateDto)
+    public async ValueTask<UserGetDto> UpdateAsync(int id, UserUpdateDto userUpdateDto)
     {
-        throw new NotImplementedException();
-    }
+		var existUser = await userRepository.GetAsync(
+				u => u.Id == id);
+
+		if (existUser == null)
+			throw new GameAppException(404, "User not found");
+
+		var alreadyExistUser = await userRepository.GetAsync(
+			u => u.Email == userUpdateDto.Email && u.Id != HttpContextHelper.UserId);
+
+		if (alreadyExistUser != null)
+			throw new GameAppException(400, "User with such email already exists");
+
+
+		existUser.UpdatedAt = DateTime.UtcNow;
+		existUser = userRepository.Update(mapper.Map(userUpdateDto, existUser));
+		await userRepository.SaveChangesAsync();
+
+		return mapper.Map<UserGetDto>(existUser);
+	}
 }

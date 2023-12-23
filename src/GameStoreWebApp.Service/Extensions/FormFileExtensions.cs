@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using System.IO;
 
-namespace MyCareer.Service.Extensions
+namespace GameStoreWebApp.Service.Extensions
 {
 	public static class FormFileExtensions
     {
