@@ -1,23 +1,22 @@
 ﻿using GameStoreWebApp.Data.IRepositories;
 using GameStoreWebApp.Domain.Entities.Users;
 using GameStoreWebApp.Service.DTOs.Users;
-using GameStoreWebApp.Service.Interfaces.Users;
-using Microsoft.Extensions.Configuration;
-using System.Collections.Generic;
-using System.Security.Claims;
-using System.Text;
-using System;
-using System.Threading.Tasks;
 using GameStoreWebApp.Service.Exceptions;
 using GameStoreWebApp.Service.Extensions;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
 using GameStoreWebApp.Service.Helpers;
-using MailKit.Security;
-using MimeKit.Text;
-using MimeKit;
+using GameStoreWebApp.Service.Interfaces.Users;
 using MailKit.Net.Smtp;
-using GameStoreWebApp.Service.Extensions;
+using MailKit.Security;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using MimeKit;
+using MimeKit.Text;
+using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace GameStoreWebApp.Service.Services.Users;
 
@@ -118,7 +117,7 @@ public class AuthService : IAuthService
         display: inline-block;
         font-size: 20px; 
         border-radius: 5px;"">
-            <a href=""http://{HttpContextHelper.HttpContext.Request.Host.Value}/api/auth/verify-email?Code={verification.Code}&Email={user.Email}"" style=""color: white; 
+            <a href=""https://{HttpContextHelper.HttpContext.Request.Host.Value}/api/auth/verify-email?Code={verification.Code}&Email={user.Email}"" style=""color: white; 
                 text-decoration: none;"">Verify</a>
     </button>"
 		};

@@ -11,14 +11,14 @@ public class User : BaseEntity
 {
     [MaxLength(30)]
     public string FirstName { get; set; }
-	[MaxLength(60)]
+	[MaxLength(80)]
 	public string LastName { get; set; }
     [MaxLength(80)]
     [EmailAddress]
     public string Email { get; set; }
 	[MaxLength(16), Phone]
 	public string PhoneNumber { get; set; }
-    [MaxLength(60)]
+    [MaxLength(80)]
     public string Password { get; set; }
     public int CountryId { get; set; }
     public Country Country { get; set; }

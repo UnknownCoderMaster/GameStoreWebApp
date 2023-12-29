@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace GameStoreWebApp.Service.DTOs.Users;
 
@@ -13,5 +12,4 @@ public class UserCreateDto
     public string PhoneNumber { get; set; }
     [MinLength(8)]
     public string Password { get; set; }
-    public IFormFile? UserImage { get; set; }
 }

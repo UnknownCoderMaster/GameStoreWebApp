@@ -1,8 +1,12 @@
+using System;
 using GameStoreWebApp.API.Extensions;
 using GameStoreWebApp.API.Helpers;
+using GameStoreWebApp.API.Middlewares;
 using GameStoreWebApp.Data.Contexts;
+using GameStoreWebApp.Service.Helpers;
 using GameStoreWebApp.Service.Mappers;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -51,7 +55,17 @@ if (app.Environment.IsDevelopment())
 	app.UseSwaggerUI();
 }
 
+
+//Set helpers
+
+if (app.Services.GetService<IHttpContextAccessor>() != null)
+	HttpContextHelper.Accessor = app.Services.GetRequiredService<IHttpContextAccessor>();
+
+app.UseMiddleware<GameStoreExceptionMiddleware>();
+
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

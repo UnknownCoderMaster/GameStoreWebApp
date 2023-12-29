@@ -4,10 +4,11 @@ using GameStoreWebApp.Domain.Configurations;
 using GameStoreWebApp.Domain.Entities.Users;
 using GameStoreWebApp.Service.DTOs.Users;
 using GameStoreWebApp.Service.Exceptions;
+using GameStoreWebApp.Service.Extensions;
 using GameStoreWebApp.Service.Helpers;
 using GameStoreWebApp.Service.Interfaces.Users;
 using Microsoft.EntityFrameworkCore;
-using GameStoreWebApp.Service.Extensions;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -21,11 +22,11 @@ public class UserService : IUserService
 	private readonly IAuthService authService;
 	private readonly IMapper mapper;
 
-	public UserService(IGenericRepository<User> userRepository, AuthService authService,
+	public UserService(IGenericRepository<User> userRepository, IServiceProvider serviceProvider,
         IMapper mapper)
     {
 		this.userRepository = userRepository;
-		this.authService = authService;
+		this.authService = serviceProvider.GetRequiredService<IAuthService>();
 		this.mapper = mapper;
 	}
 
@@ -57,6 +58,8 @@ public class UserService : IUserService
 		var createdUser = await userRepository.CreateAsync(mapper.Map<User>(userForCreationDTO));
 
 		createdUser.Password = createdUser.Password.Encrypt();
+
+		createdUser.Role = Domain.Enums.UserRole.User;
 
 		await userRepository.SaveChangesAsync();
 

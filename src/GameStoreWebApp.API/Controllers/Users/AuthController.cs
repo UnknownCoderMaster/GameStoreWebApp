@@ -41,6 +41,11 @@ public class AuthController : ControllerBase
 	public async ValueTask<IActionResult> CreateAsync(UserCreateDto userCreateDto)
 	=> Ok(await userService.CreateAsync(userCreateDto));
 
+	/// <summary>
+	/// Verify user's email
+	/// </summary>
+	/// <param name="dto"></param>
+	/// <returns></returns>
 	[HttpGet("verify-email")]
 	public async ValueTask<IActionResult> VerifyEmail([FromQuery] VerificationForCreationDto dto)
 		=> Ok(await authService.ConfirmEmail(dto));
