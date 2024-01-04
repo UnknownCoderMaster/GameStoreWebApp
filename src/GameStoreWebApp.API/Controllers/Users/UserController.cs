@@ -1,6 +1,7 @@
 ﻿using GameStoreWebApp.Domain.Configurations;
 using GameStoreWebApp.Service.DTOs.Users;
 using GameStoreWebApp.Service.Interfaces.Users;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -32,7 +33,7 @@ public class UserController : ControllerBase
 	/// </summary>
 	/// <param name="params"></param>
 	/// <returns></returns>
-	[HttpGet]
+	[HttpGet, Authorize(Roles = "Admin")]
 	public async ValueTask<IActionResult> GetAllAsync([FromQuery] PaginationParams @params)
         => Ok(await userService.GetAllAsync(@params));
 
@@ -41,7 +42,7 @@ public class UserController : ControllerBase
 	/// </summary>
 	/// <param name="id"></param>
 	/// <returns></returns>
-	[HttpGet("{id}")]
+	[HttpGet("{id}"), Authorize(Roles = "Admin")]
 	public async ValueTask<IActionResult> GetAsync([FromRoute] int id)
         => Ok(await userService.GetAsync(u => u.Id == id));
 
@@ -59,7 +60,7 @@ public class UserController : ControllerBase
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    [HttpDelete("{id}")]
+    [HttpDelete("{id}"), Authorize(Roles = "Admin")]
     public async ValueTask<IActionResult> DeleteAsync([FromRoute] int id)
         => Ok(await userService.DeleteAsync(id));
 }
