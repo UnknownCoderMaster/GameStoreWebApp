@@ -42,7 +42,7 @@ public class UserController : ControllerBase
 	/// </summary>
 	/// <param name="id"></param>
 	/// <returns></returns>
-	[HttpGet("{id}"), Authorize(Roles = "Admin")]
+	[HttpGet("{id}"), Authorize]
 	public async ValueTask<IActionResult> GetAsync([FromRoute] int id)
         => Ok(await userService.GetAsync(u => u.Id == id));
 

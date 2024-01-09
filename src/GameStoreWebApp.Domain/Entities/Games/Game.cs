@@ -14,6 +14,6 @@ public class Game : BaseEntity
     public Category Category { get; set; }
     public DateOnly ReleaseDate { get; set; }
     public string Developer { get; set; }
-    public int Downloads { get; set; }
+    public int Downloads { get; set; } = 0;
     public List<Rate> Rates { get; set; }
 }
