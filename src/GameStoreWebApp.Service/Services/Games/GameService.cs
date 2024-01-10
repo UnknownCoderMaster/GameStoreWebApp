@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
 using GameStoreWebApp.Data.IRepositories;
 using GameStoreWebApp.Domain.Configurations;
-using GameStoreWebApp.Domain.Entities.Feedbacks;
 using GameStoreWebApp.Domain.Entities.Games;
 using GameStoreWebApp.Service.DTOs.Games;
-using GameStoreWebApp.Service.DTOs.Rates;
 using GameStoreWebApp.Service.Exceptions;
 using GameStoreWebApp.Service.Extensions;
 using GameStoreWebApp.Service.Helpers;
@@ -48,9 +46,23 @@ public class GameService : IGameService
 		return true;
 	}
 
-	public ValueTask<bool> DeleteAsync(int id)
+	public async ValueTask<bool> DeleteAsync(int id)
 	{
-		throw new NotImplementedException();
+		var existingGame = await gameRepository.GetAsync(g => g.Id == id, false);
+
+		var isDeleted = await gameRepository.DeleteAsync(id);
+
+		if (!isDeleted)
+			throw new GameAppException(404, "Game Not Found");
+
+		await gameRepository.SaveChangesAsync();
+
+		if (File.Exists(existingGame.FilePath))
+			File.Delete(existingGame.FilePath);
+		else
+			throw new GameAppException(500, "File Not Deleted");
+
+		return true;
 	}
 
 	public async ValueTask<IEnumerable<GameGetDto>> GetAllAsync(PaginationParams @params, Expression<Func<Game, bool>> expression = null)
@@ -69,8 +81,37 @@ public class GameService : IGameService
 		return mapper.Map<GameGetDto>(game);
 	}
 
-	public ValueTask<bool> UpdateAsync(int id, GameUpdateDto gameUpdate)
+	public async ValueTask<bool> UpdateAsync(int id, GameUpdateDto gameUpdateDto)
 	{
-		throw new NotImplementedException();
+		var existingGame = await gameRepository.GetAsync(g => g.Id == id, false);
+
+		if (existingGame is null)
+			throw new GameAppException(404, "Game Not Found!");
+
+		var updatingGame = mapper.Map(gameUpdateDto, existingGame);
+		updatingGame.UpdatedAt = DateTime.UtcNow;
+
+		if(gameUpdateDto.File is not null)
+		{
+			if (File.Exists(existingGame.FilePath))
+				File.Delete(existingGame.FilePath);
+
+			var gameFilePath = EnvironmentHelper.GameFilePath;
+			var fileName = Guid.NewGuid().ToString() + '_' + gameUpdateDto.File.FileName;
+			var filePath = Path.Combine(gameFilePath, fileName);
+
+			using (var stream = new FileStream(filePath, FileMode.Create))
+			{
+				await gameUpdateDto.File.CopyToAsync(stream);
+			}
+
+			updatingGame.FilePath = filePath;
+		}
+		
+		gameRepository.Update(updatingGame);
+
+		await gameRepository.SaveChangesAsync();
+
+		return true;
 	}
 }

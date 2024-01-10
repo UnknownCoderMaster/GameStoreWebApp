@@ -15,6 +15,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using System;
 using System.Linq;
 using System.Text;
 
@@ -90,6 +92,20 @@ public static class ServiceExtensions
 						new string[] { }
 					}
 				});
+
+			p.SchemaFilter<DateOnlySchemaFilter>();
 		});
+	}
+}
+
+public class DateOnlySchemaFilter : ISchemaFilter
+{
+	public void Apply(OpenApiSchema schema, SchemaFilterContext context)
+	{
+		if (context.Type == typeof(DateOnly))
+		{
+			schema.Type = "string";
+			schema.Format = "date";
+		}
 	}
 }
