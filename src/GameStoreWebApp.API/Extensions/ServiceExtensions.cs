@@ -4,9 +4,13 @@ using GameStoreWebApp.Domain.Entities.Addresses;
 using GameStoreWebApp.Domain.Entities.Feedbacks;
 using GameStoreWebApp.Domain.Entities.Games;
 using GameStoreWebApp.Domain.Entities.Users;
+using GameStoreWebApp.Service.Interfaces.Addresses;
+using GameStoreWebApp.Service.Interfaces.Feedbacks;
 using GameStoreWebApp.Service.Interfaces.Games;
 using GameStoreWebApp.Service.Interfaces.Rates;
 using GameStoreWebApp.Service.Interfaces.Users;
+using GameStoreWebApp.Service.Services.Addresses;
+using GameStoreWebApp.Service.Services.Feedbacks;
 using GameStoreWebApp.Service.Services.Games;
 using GameStoreWebApp.Service.Services.Rates;
 using GameStoreWebApp.Service.Services.Users;
@@ -40,6 +44,8 @@ public static class ServiceExtensions
 		services.AddScoped<IUserService, UserService>();
 		services.AddScoped<IRateService, RateService>();
 		services.AddScoped<IGameService, GameService>();
+		services.AddScoped<IFeedbackService, FeedbackService>();
+		services.AddScoped<IAddressService, AddressService>();
 	}
 
 	public static void ConfigureJwt(this IServiceCollection services, IConfiguration configuration)

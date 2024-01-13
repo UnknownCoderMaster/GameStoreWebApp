@@ -31,11 +31,6 @@ public class GameStoreDbContext : DbContext
             .WithOne(r => r.User)
             .OnDelete(DeleteBehavior.Cascade);
 
-        modelBuilder.Entity<User>()
-            .HasMany(u => u.Feedbacks)
-            .WithOne(f => f.User)
-            .OnDelete(DeleteBehavior.Cascade);
-
         modelBuilder.Entity<Game>()
             .HasMany<Rate>(g => g.Rates)
             .WithOne(r => r.Game)

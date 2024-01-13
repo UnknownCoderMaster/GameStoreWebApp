@@ -27,6 +27,5 @@ public class User : BaseEntity
     public UserRole Role { get; set; }
     public string? ImagePath { get; set; }
     public List<Rate> Rates { get; set; }
-    public List<Feedback> Feedbacks { get; set; }
 	public bool IsEmailConfirmed { get; set; }
 }

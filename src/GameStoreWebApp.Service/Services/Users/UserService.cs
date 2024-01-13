@@ -80,13 +80,13 @@ public class UserService : IUserService
 
     public async ValueTask<IEnumerable<UserGetDto>> GetAllAsync(PaginationParams @params, Expression<Func<User, bool>> expression = null)
     {
-		var users = userRepository.GetAll(expression: expression, isTracking: false);
+		var users = userRepository.GetAll(expression: expression, isTracking: false, includes: new string[] {"Country", "Region"});
         return mapper.Map<List<UserGetDto>>(await users.ToPagedList(@params).ToListAsync());
 	}
 
     public async ValueTask<UserGetDto> GetAsync(Expression<Func<User, bool>> expression)
     {
-        var user = await userRepository.GetAsync(expression);
+        var user = await userRepository.GetAsync(expression: expression, includes: new string[] {"Country", "Region"});
 
         if (user is null)
             throw new GameAppException(404, "User not found");

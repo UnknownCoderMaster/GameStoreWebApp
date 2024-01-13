@@ -28,7 +28,6 @@ builder.Services.AddControllers(options =>
 								 new ConfigureApiUrlName()));
 });
 
-// new
 builder.Services.AddControllers().AddJsonOptions(x =>
 {
 	// serialize enums as strings in api responses (e.g. Role)
@@ -37,8 +36,6 @@ builder.Services.AddControllers().AddJsonOptions(x =>
 	// ignore omitted parameters on models to enable optional params (e.g. User update)
 	x.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
 });
-//
-
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

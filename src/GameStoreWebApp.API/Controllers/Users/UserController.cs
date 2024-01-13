@@ -24,7 +24,7 @@ public class UserController : ControllerBase
 	/// <param name="id"></param>
 	/// <param name="userUpdateDto"></param>
 	/// <returns></returns>
-	[HttpPut("{id}")]
+	[HttpPut("{id}"), Authorize]
 	public async ValueTask<IActionResult> UpdateAsync([FromRoute] int id, UserUpdateDto userUpdateDto)
         => Ok(await userService.UpdateAsync(id, userUpdateDto));
 

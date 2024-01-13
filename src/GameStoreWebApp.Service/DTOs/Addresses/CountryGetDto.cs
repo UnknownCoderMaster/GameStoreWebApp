@@ -1,3 +1,3 @@
 ﻿namespace GameStoreWebApp.Service.DTOs.Addresses;
 
-public record CountryCreate(string Name);
+public record CountryGetDto(int id, string Name);
