@@ -1,5 +1,4 @@
 ﻿using GameStoreWebApp.Domain.Configurations;
-using GameStoreWebApp.Domain.Entities.Feedbacks;
 using GameStoreWebApp.Domain.Entities.Games;
 using GameStoreWebApp.Service.DTOs.Games;
 using System;

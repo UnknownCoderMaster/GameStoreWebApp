@@ -8,6 +8,8 @@ namespace GameStoreWebApp.API.Controllers.Addresses
 {
 	[Route("api/[controller]")]
 	[ApiController]
+
+	#pragma warning disable CS1591
 	public class AddressController : ControllerBase
 	{
 		private readonly IAddressService addressService;
@@ -29,6 +31,7 @@ namespace GameStoreWebApp.API.Controllers.Addresses
 		/// <summary>
 		/// Get all regions by Country Id
 		/// </summary>
+		/// <param name="params"></param>
 		/// <param name="countryId"></param>
 		/// <returns></returns>
 		[HttpGet("region")]
@@ -47,10 +50,12 @@ namespace GameStoreWebApp.API.Controllers.Addresses
 		/// <summary>
 		/// Get all countries
 		/// </summary>
-		/// <param name="feedbackCreateDto"></param>
+		/// <param name="params"></param>
 		/// <returns></returns>
 		[HttpGet("country")]
 		public async ValueTask<IActionResult> GetCountryAsync([FromQuery] PaginationParams @params)
 			=> Ok(await addressService.GetAllCountriesAsync(@params));
 	}
+
+	#pragma warning restore CS1591
 }

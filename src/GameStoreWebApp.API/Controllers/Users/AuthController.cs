@@ -21,7 +21,19 @@ public class AuthController : ControllerBase
 	/// Authorization
 	/// </summary>
 	/// <param name="dto"></param>
-	/// <returns></returns>
+	/// <returns>This Endpoint returns new token</returns>
+	/// <remarks>
+	/// Sample request:
+	///
+	///     POST /Auth
+	///     {
+	///        "email": "example@mail.ru",
+	///        "password": Ex@mpl3
+	///     }
+	///
+	/// </remarks>
+	/// <response code="201">Returns the newly created item</response>
+	/// <response code="400">If the item is null</response>
 	[HttpPost("login")]
 	public async ValueTask<IActionResult> Login(UserForLoginDTO dto)
 	{

@@ -10,4 +10,5 @@ public record GameCreateDto(
 	Category Category, 
 	DateOnly ReleaseDate, 
 	string Developer, 
-	IFormFile File);
+	IFormFile File
+);
